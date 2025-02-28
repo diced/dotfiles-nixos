@@ -26,8 +26,6 @@ add_newline = false
 
 [username]
 show_always = true
-# format = " [$user]($style)@"
-#  use nixos glyph
 format = " [$user]($style)@"
 style_user = "bold blue"
 
