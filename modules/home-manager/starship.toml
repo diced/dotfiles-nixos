@@ -26,12 +26,12 @@ add_newline = false
 
 [username]
 show_always = true
-format = " [$user]($style)@"
+format = " [$user]($style)@"
 style_user = "bold blue"
 
 [hostname]
 ssh_only = true
-format = " [$hostname]($style) in "
+format = " [$hostname]($style) in "
 style = "bold blue"
 
 [character]
