@@ -25,7 +25,15 @@
 
           {
             home-manager = {
-              users.diced = import ./modules/home-manager;
+              users.diced = {
+                imports = [./modules/home-manager];
+
+                # options for home manager, per host
+                cfg = {
+                  enable = true;
+                  hyprland.enable = true;
+                };
+              };
               useUserPackages = true;
               useGlobalPkgs = true;
               extraSpecialArgs = { inherit self; };

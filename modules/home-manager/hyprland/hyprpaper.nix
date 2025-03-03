@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let setWallpaperOnLogin = pkgs.writeShellScript "wallpaper-on-login" ''
   current=$(gsettings get org.gnome.desktop.interface color-scheme)
@@ -9,20 +9,27 @@ let setWallpaperOnLogin = pkgs.writeShellScript "wallpaper-on-login" ''
     hyprctl hyprpaper wallpaper ",${../../../wallpapers/dark.png}"
   fi''; 
 in {
-  services.hyprpaper = {
-    enable = true;
-    settings = {
-      ipc = "on";
-      splash = false;
+  options.cfg.hyprland.hyprpaper = lib.mkOption {
+    type = lib.types.bool;
+    default = config.cfg.hyprland.enable;
+  };
 
-      preload = [
-        "${../../../wallpapers/light.png}"
-        "${../../../wallpapers/dark.png}"
-      ];
+  config = lib.mkIf config.cfg.hyprland.hyprpaper {
+    services.hyprpaper = {
+      enable = true;
+      settings = {
+        ipc = "on";
+        splash = false;
 
-      wallpaper = [", ${../../../wallpapers/light.png}"];
+        preload = [
+          "${../../../wallpapers/light.png}"
+          "${../../../wallpapers/dark.png}"
+        ];
+
+        wallpaper = [", ${../../../wallpapers/light.png}"];
+      };
+
+      # postStart = "${setWallpaperOnLogin}";
     };
-
-    # postStart = "${setWallpaperOnLogin}";
   };
 }
